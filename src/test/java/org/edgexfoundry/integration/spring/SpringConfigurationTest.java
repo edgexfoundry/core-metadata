@@ -1,22 +1,21 @@
 /*******************************************************************************
  * Copyright 2016-2017 Dell Inc.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  *
- * @microservice:  core-metadata
+ * @microservice: core-metadata
  * @author: Jim White, Dell
  * @version: 1.0.0
  *******************************************************************************/
+
 package org.edgexfoundry.integration.spring;
 
 import static org.junit.Assert.assertNotNull;
@@ -25,7 +24,6 @@ import org.edgexfoundry.Application;
 import org.edgexfoundry.HeartBeat;
 import org.edgexfoundry.dao.AddressableRepository;
 import org.edgexfoundry.dao.CommandRepository;
-import org.edgexfoundry.dao.DeviceManagerRepository;
 import org.edgexfoundry.dao.DeviceProfileRepository;
 import org.edgexfoundry.dao.DeviceReportRepository;
 import org.edgexfoundry.dao.DeviceRepository;
@@ -47,36 +45,36 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration("src/test/resources")
-@Category({ RequiresMongoDB.class, RequiresSpring.class, RequiresWeb.class })
+@Category({RequiresMongoDB.class, RequiresSpring.class, RequiresWeb.class})
 public class SpringConfigurationTest {
 
 
-	@Autowired
-	HeartBeat heartBeat;
-	
-	@Autowired
-	ApplicationContext ctx;
+  @Autowired
+  HeartBeat heartBeat;
 
-	@Test
-	public void testHeartBeatBeanExists() {
-		assertNotNull("HeartBeat bean not available", heartBeat);
-	}
+  @Autowired
+  ApplicationContext ctx;
 
-	@Test
-	@SuppressWarnings("rawtypes")
-	public void testReposBeansExist() {
-		Class[] clazz = { AddressableRepository.class, CommandRepository.class, DeviceManagerRepository.class,
-				DeviceProfileRepository.class, DeviceReportRepository.class, DeviceReportRepository.class,
-				DeviceRepository.class, DeviceServiceRepository.class, ScheduleEventRepository.class,
-				ScheduleRepository.class };
-		checkBeanExistence(clazz);
-	}
+  @Test
+  public void testHeartBeatBeanExists() {
+    assertNotNull("HeartBeat bean not available", heartBeat);
+  }
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private void checkBeanExistence(Class[] classes) {
-		for (Class class1 : classes) {
-			Object obj = ctx.getBean(class1);
-			assertNotNull("Bean of type " + class1 + " was not found", obj);
-		}
-	}
+  @Test
+  @SuppressWarnings("rawtypes")
+  public void testReposBeansExist() {
+    Class[] clazz =
+        {AddressableRepository.class, CommandRepository.class, DeviceProfileRepository.class,
+            DeviceReportRepository.class, DeviceReportRepository.class, DeviceRepository.class,
+            DeviceServiceRepository.class, ScheduleEventRepository.class, ScheduleRepository.class};
+    checkBeanExistence(clazz);
+  }
+
+  @SuppressWarnings({"unchecked", "rawtypes"})
+  private void checkBeanExistence(Class[] classes) {
+    for (Class class1 : classes) {
+      Object obj = ctx.getBean(class1);
+      assertNotNull("Bean of type " + class1 + " was not found", obj);
+    }
+  }
 }
