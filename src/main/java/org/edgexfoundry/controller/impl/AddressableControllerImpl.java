@@ -61,7 +61,8 @@ public class AddressableControllerImpl implements AddressableController {
 
   @Autowired
   private CallbackExecutor callback;
-  @Value("${read.max.limit}")
+  
+  @Value("${read.max.limit:100}")
   private int maxLimit;
 
   /**
@@ -246,6 +247,8 @@ public class AddressableControllerImpl implements AddressableController {
   @RequestMapping(method = RequestMethod.PUT)
   @Override
   public boolean update(@RequestBody Addressable addressable2) {
+    if (addressable2 == null)
+      throw new ServiceException(new DataValidationException("No addressable data provided"));
     try {
       Addressable addressable = dao.getByIdOrName(addressable2);
       if (addressable == null) {

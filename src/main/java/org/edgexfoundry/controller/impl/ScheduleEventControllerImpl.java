@@ -297,6 +297,8 @@ public class ScheduleEventControllerImpl implements ScheduleEventController {
   @RequestMapping(method = RequestMethod.PUT)
   @Override
   public boolean update(@RequestBody ScheduleEvent scheduleEvent2) {
+    if (scheduleEvent2 == null)
+      throw new ServiceException(new DataValidationException("No schedule event data provided"));
     try {
       ScheduleEvent scheduleEvent = dao.getByIdOrName(scheduleEvent2);
       if (scheduleEvent == null) {

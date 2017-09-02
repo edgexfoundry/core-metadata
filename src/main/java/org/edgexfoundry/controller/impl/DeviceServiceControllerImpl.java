@@ -34,6 +34,7 @@ import org.edgexfoundry.domain.meta.Device;
 import org.edgexfoundry.domain.meta.DeviceService;
 import org.edgexfoundry.domain.meta.OperatingState;
 import org.edgexfoundry.domain.meta.ProvisionWatcher;
+import org.edgexfoundry.exception.controller.ClientException;
 import org.edgexfoundry.exception.controller.DataValidationException;
 import org.edgexfoundry.exception.controller.LimitExceededException;
 import org.edgexfoundry.exception.controller.NotFoundException;
@@ -601,6 +602,8 @@ public class DeviceServiceControllerImpl implements DeviceServiceController {
   @RequestMapping(method = RequestMethod.PUT)
   @Override
   public boolean update(@RequestBody DeviceService deviceService2) {
+    if (deviceService2 == null)
+      throw new ServiceException(new DataValidationException("No device service data provided"));
     try {
       DeviceService deviceService = dao.getByIdOrName(deviceService2);
       if (deviceService == null) {
@@ -615,6 +618,8 @@ public class DeviceServiceControllerImpl implements DeviceServiceController {
       throw nE;
     } catch (DataValidationException dE) {
       throw dE;
+    } catch (ClientException cE) {
+      throw cE;
     } catch (Exception e) {
       logger.error("Error updating device:  " + e.getMessage());
       throw new ServiceException(e);

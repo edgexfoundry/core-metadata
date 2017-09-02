@@ -179,6 +179,8 @@ public class ScheduleControllerImpl implements ScheduleController {
   @RequestMapping(method = RequestMethod.PUT)
   @Override
   public boolean update(@RequestBody Schedule schedule2) {
+    if (schedule2 == null)
+      throw new ServiceException(new DataValidationException("No schedule data provided"));
     try {
       Schedule schedule = dao.getByIdOrName(schedule2);
       if (schedule == null) {

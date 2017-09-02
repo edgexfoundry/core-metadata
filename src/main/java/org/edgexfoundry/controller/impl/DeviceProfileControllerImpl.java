@@ -383,6 +383,8 @@ public class DeviceProfileControllerImpl implements DeviceProfileController {
   @RequestMapping(method = RequestMethod.PUT)
   @Override
   public boolean update(@RequestBody DeviceProfile profile2) {
+    if (profile2 == null)
+      throw new ServiceException(new DataValidationException("No device profile data provided"));
     try {
       DeviceProfile profile = dao.getByIdOrName(profile2);
       if (profile == null) {
@@ -398,6 +400,8 @@ public class DeviceProfileControllerImpl implements DeviceProfileController {
       throw nE;
     } catch (DataValidationException dE) {
       throw dE;
+    } catch (ClientException cE) {
+      throw cE;
     } catch (Exception e) {
       logger.error("Error updating device profile:  " + e.getMessage());
       throw new ServiceException(e);

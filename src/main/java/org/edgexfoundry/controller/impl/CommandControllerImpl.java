@@ -156,6 +156,8 @@ public class CommandControllerImpl implements CommandController {
   @RequestMapping(method = RequestMethod.PUT)
   @Override
   public boolean update(@RequestBody Command command2) {
+    if (command2 == null)
+      throw new ServiceException(new DataValidationException("No command data provided"));
     try {
       Command command = repos.findOne(command2.getId());
       if (command == null) {
