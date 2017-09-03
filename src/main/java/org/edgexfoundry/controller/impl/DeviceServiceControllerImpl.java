@@ -627,20 +627,7 @@ public class DeviceServiceControllerImpl implements DeviceServiceController {
   }
 
   private void updateDeviceService(DeviceService from, DeviceService to) {
-    if (from.getAddressable() != null) {
-      Addressable addr = addressableDao.getByIdOrName(from.getAddressable());
-      if (addr != null)
-        to.setAddressable(addr);
-      else {
-        logger.error(
-            "Unable to locate addressable and cannot set device service addressable to null");
-        if (from.getAddressable().getId() != null)
-          throw new NotFoundException(Addressable.class.toString(), from.getAddressable().getId());
-        else
-          throw new NotFoundException(Addressable.class.toString(),
-              from.getAddressable().getName());
-      }
-    }
+    checkAddressable(from, to);
     if (from.getAdminState() != null)
       to.setAdminState(from.getAdminState());
     if (from.getDescription() != null)
@@ -658,6 +645,23 @@ public class DeviceServiceControllerImpl implements DeviceServiceController {
     if (from.getOrigin() != 0)
       to.setOrigin(from.getOrigin());
     repos.save(to);
+  }
+  
+  private void checkAddressable(DeviceService from, DeviceService to) {
+    if (from.getAddressable() != null) {
+      Addressable addr = addressableDao.getByIdOrName(from.getAddressable());
+      if (addr != null)
+        to.setAddressable(addr);
+      else {
+        logger.error(
+            "Unable to locate addressable and cannot set device service addressable to null");
+        if (from.getAddressable().getId() != null)
+          throw new NotFoundException(Addressable.class.toString(), from.getAddressable().getId());
+        else
+          throw new NotFoundException(Addressable.class.toString(),
+              from.getAddressable().getName());
+      }
+    }
   }
 
   /**

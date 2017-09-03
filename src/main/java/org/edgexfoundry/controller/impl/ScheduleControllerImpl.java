@@ -201,7 +201,6 @@ public class ScheduleControllerImpl implements ScheduleController {
   }
 
   private void updateSchedule(Schedule from, Schedule to) {
-    // TODO: What does it mean to update a completed schedule?
     if (from.getCron() != null) {
       validateCronExpression(from.getCron());
       to.setCron(from.getCron());
