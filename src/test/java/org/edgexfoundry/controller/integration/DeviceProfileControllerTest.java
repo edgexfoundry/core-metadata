@@ -28,7 +28,6 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -142,10 +141,9 @@ public class DeviceProfileControllerTest {
     controller.deviceProfile("nosuchid");
   }
 
-  @Test
+  @Test(expected = NotFoundException.class)
   public void testDeviceProfileAsYamlWithUnknownId() {
-    assertNull("Controller is returning something other than null with an unknown id",
-        controller.deviceProfileAsYaml("nosuchid"));
+    controller.deviceProfileAsYaml("nosuchid");
   }
 
   @Test(expected = ServiceException.class)
@@ -242,7 +240,8 @@ public class DeviceProfileControllerTest {
 
   @Test
   public void testDeviceProfileByModelOrManufacturer() {
-    List<DeviceProfile> profiles = controller.deviceProfilesByManufacturerOrModel(TEST_MAUFACTURER, null);
+    List<DeviceProfile> profiles =
+        controller.deviceProfilesByManufacturerOrModel(TEST_MAUFACTURER, null);
     assertEquals("Find for manufacturer not returning appropriate list", 1, profiles.size());
     checkTestData(profiles.get(0), id);
     controller.deviceProfilesByManufacturerOrModel(null, TEST_MODEL);
@@ -337,7 +336,8 @@ public class DeviceProfileControllerTest {
         profile2.getOrigin());
     assertEquals("Device profile description does not match expected", ProfileData.TEST_DESCRIPTION,
         profile2.getDescription());
-    assertArrayEquals("Device profile labels does not match expected", TEST_LABELS, profile2.getLabels());
+    assertArrayEquals("Device profile labels does not match expected", TEST_LABELS,
+        profile2.getLabels());
     assertEquals("Device profile manufacturer does not match expected", TEST_MAUFACTURER,
         profile2.getManufacturer());
     assertEquals("Device profile model does not match expected", TEST_MODEL, profile2.getModel());

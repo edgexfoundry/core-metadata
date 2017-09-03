@@ -167,7 +167,7 @@ public class DeviceProfileControllerTest {
     controller.deviceProfileAsYaml(TEST_ID);
   }
 
-  @Test
+  @Test(expected = NotFoundException.class)
   public void testDeviceProfileAsYamlNotFound() {
     assertNull("Unfound profile was not returned as null", controller.deviceProfileAsYaml(TEST_ID));
   }

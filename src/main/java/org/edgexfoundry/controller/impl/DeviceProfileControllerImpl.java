@@ -111,7 +111,8 @@ public class DeviceProfileControllerImpl implements DeviceProfileController {
 
   /**
    * Fetch the profile identified by database generated id and return as a YAML string. Returns
-   * ServiceException (HTTP 503) for unknown or unanticipated issues.
+   * ServiceException (HTTP 503) for unknown or unanticipated issues. Returns NotFoundException
+   * (HTTP 404) if no profile can not be found by id.
    * 
    * @param String database generated id for the profile
    * 
@@ -124,7 +125,9 @@ public class DeviceProfileControllerImpl implements DeviceProfileController {
       DeviceProfile profile = repos.findOne(id);
       if (profile != null)
         return new Yaml().dumpAs(profile, Tag.MAP, FlowStyle.AUTO);
-      return null;
+      throw new NotFoundException(DeviceProfile.class.toString(), id);
+    } catch (NotFoundException nfE) {
+      throw nfE;
     } catch (Exception e) {
       logger.error("Error getting profile:  " + e.getMessage());
       throw new ServiceException(e);

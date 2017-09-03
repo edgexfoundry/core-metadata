@@ -771,13 +771,15 @@ schemas:
             required: false
             repeat: false
     get: 
-        description: Fetch the profile identified by database generated id and return as a YAML string. Returns ServiceException (HTTP 503) for unknown or unanticipated issues.
+        description: Fetch the profile identified by database generated id and return as a YAML string. Returns ServiceException (HTTP 503) for unknown or unanticipated issues.  eturns NotFoundException (HTTP 404) if the device profile cannot be found by the name provided.
         responses: 
             "200": 
                 description: device profile in YAML format
                 body: 
                     application/json: 
                         schema: deviceprofile
+            "404":
+               description: if the device profile cannot be found by the id provided
             "503": 
                 description: for unknown or unanticipated issues                
 /deviceprofile/model/{model}: 
