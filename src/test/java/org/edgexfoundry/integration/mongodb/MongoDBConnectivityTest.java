@@ -16,7 +16,7 @@
  * @version: 1.0.0
  *******************************************************************************/
 
-package orge.edgexfoundry.integration.mongodb;
+package org.edgexfoundry.integration.mongodb;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;

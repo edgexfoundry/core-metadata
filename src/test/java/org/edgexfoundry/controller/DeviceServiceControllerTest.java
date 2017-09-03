@@ -171,19 +171,19 @@ public class DeviceServiceControllerTest {
   }
 
   @Test(expected = NotFoundException.class)
-  public void testDeviceForAddressableNoneFound() {
+  public void testDeviceServiceForAddressableNoneFound() {
     when(addressableDao.getById(TEST_ID)).thenReturn(null);
     controller.deviceServicesForAddressable(TEST_ID);
   }
 
   @Test(expected = ServiceException.class)
-  public void testDeviceForAddressableException() {
+  public void testDeviceServiceForAddressableException() {
     when(addressableDao.getById(TEST_ID)).thenThrow(new RuntimeException(TEST_ERR_MSG));
     controller.deviceServicesForAddressable(TEST_ID);
   }
 
   @Test
-  public void testDeviceForAddressableByName() {
+  public void testDeviceServiceForAddressableByName() {
     Addressable addressable = AddressableData.newTestInstance();
     List<DeviceService> srvs = new ArrayList<>();
     srvs.add(service);
@@ -197,13 +197,13 @@ public class DeviceServiceControllerTest {
   }
 
   @Test(expected = NotFoundException.class)
-  public void testDeviceForAddressableByNameNoneFound() {
+  public void testDeviceServiceForAddressableByNameNoneFound() {
     when(addressableDao.getByName(AddressableData.TEST_ADDR_NAME)).thenReturn(null);
     controller.deviceServicesForAddressableByName(AddressableData.TEST_ADDR_NAME);
   }
 
   @Test(expected = ServiceException.class)
-  public void testDeviceForAddressableByNameException() {
+  public void testDeviceServiceForAddressableByNameException() {
     when(addressableDao.getByName(AddressableData.TEST_ADDR_NAME))
         .thenThrow(new RuntimeException(TEST_ERR_MSG));
     controller.deviceServicesForAddressableByName(AddressableData.TEST_ADDR_NAME);

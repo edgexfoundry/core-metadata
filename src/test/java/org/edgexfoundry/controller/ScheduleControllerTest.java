@@ -109,25 +109,21 @@ public class ScheduleControllerTest {
 
   @Test(expected = LimitExceededException.class)
   public void testDeviceServicesMaxLimit() {
-    List<Schedule> schs = new ArrayList<>();
-    schs.add(schedule);
     when(repos.count()).thenReturn(1000L);
     controller.schedules();
   }
 
   @Test(expected = ServiceException.class)
   public void testDeviceServicesException() {
-    List<Schedule> schs = new ArrayList<>();
-    schs.add(schedule);
     when(repos.findAll(any(Sort.class))).thenThrow(new RuntimeException(TEST_ERR_MSG));
     when(repos.count()).thenReturn(1L);
     controller.schedules();
   }
 
   @Test
-  public void testWatherForName() {
+  public void testScheduleForName() {
     when(repos.findByName(ScheduleData.TEST_SCHEDULE_NAME)).thenReturn(schedule);
-    assertEquals("Watcher returned is not as expected", schedule,
+    assertEquals("Schedule returned is not as expected", schedule,
         controller.scheduleForName(ScheduleData.TEST_SCHEDULE_NAME));
   }
 

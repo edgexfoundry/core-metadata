@@ -168,7 +168,8 @@ public class ProvisionWatcherControllerTest {
 
   @Test
   public void testWatchersForProfileByName() {
-    List<ProvisionWatcher> watchers = controller.watchersForProfileByName(ProfileData.TEST_PROFILE_NAME);
+    List<ProvisionWatcher> watchers =
+        controller.watchersForProfileByName(ProfileData.TEST_PROFILE_NAME);
     assertEquals("Find for profiles not returning appropriate list", 1, watchers.size());
     checkTestData(watchers.get(0), id);
   }
@@ -358,7 +359,7 @@ public class ProvisionWatcherControllerTest {
     controller.update(watcher);
   }
 
-  @Test(expected = DataValidationException.class)
+  @Test(expected = ServiceException.class)
   public void testUpdateWithNull() {
     controller.update(null);
   }
