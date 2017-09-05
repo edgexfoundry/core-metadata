@@ -328,12 +328,15 @@ public class DeviceProfileControllerTest {
   @Test(expected = ClientException.class)
   public void testUploadEmptyYmlFile() throws IOException {
     File file = new File("src/test/resources/emptyprofile.yaml");
-    FileInputStream input = new FileInputStream(file);
-    try {
-      MultipartFile multipartFile = new MockMultipartFile("file", input);
-      controller.uploadYamlFile(multipartFile);
+    try (FileInputStream input = new FileInputStream(file)) {
+      try {
+        MultipartFile multipartFile = new MockMultipartFile("file", input);
+        controller.uploadYamlFile(multipartFile);
+      } finally {
+        input.close();
+      }
     } finally {
-      input.close();
+      System.out.println("File src/test/resources/emptyprofile.yaml not provided");
     }
   }
 
