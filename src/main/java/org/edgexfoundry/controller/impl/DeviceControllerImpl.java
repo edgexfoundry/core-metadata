@@ -35,6 +35,7 @@ import org.edgexfoundry.domain.meta.Device;
 import org.edgexfoundry.domain.meta.DeviceProfile;
 import org.edgexfoundry.domain.meta.DeviceService;
 import org.edgexfoundry.domain.meta.OperatingState;
+import org.edgexfoundry.exception.controller.ClientException;
 import org.edgexfoundry.exception.controller.DataValidationException;
 import org.edgexfoundry.exception.controller.LimitExceededException;
 import org.edgexfoundry.exception.controller.NotFoundException;
@@ -787,6 +788,8 @@ public class DeviceControllerImpl implements DeviceController {
   @RequestMapping(method = RequestMethod.PUT)
   @Override
   public boolean update(@RequestBody Device device2) {
+    if (device2 == null)
+      throw new ServiceException(new DataValidationException("No device data provided"));
     try {
       Device device = getDeviceByIdOrName(device2);
       if (device == null) {
@@ -801,16 +804,15 @@ public class DeviceControllerImpl implements DeviceController {
       throw nE;
     } catch (DataValidationException dE) {
       throw dE;
+    } catch (ClientException cE) {
+      throw cE;
     } catch (Exception e) {
       logger.error("Error updating device:  " + e.getMessage());
       throw new ServiceException(e);
     }
   }
 
-  @Override
-  public Device getDeviceByIdOrName(Device device) {
-    if (device == null)
-      return null;
+  private Device getDeviceByIdOrName(Device device) {
     if (device.getId() != null)
       return repos.findOne(device.getId());
     return repos.findByName(device.getName());

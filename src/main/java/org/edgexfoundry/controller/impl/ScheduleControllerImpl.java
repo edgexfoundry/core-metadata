@@ -179,6 +179,8 @@ public class ScheduleControllerImpl implements ScheduleController {
   @RequestMapping(method = RequestMethod.PUT)
   @Override
   public boolean update(@RequestBody Schedule schedule2) {
+    if (schedule2 == null)
+      throw new ServiceException(new DataValidationException("No schedule data provided"));
     try {
       Schedule schedule = dao.getByIdOrName(schedule2);
       if (schedule == null) {
@@ -199,7 +201,6 @@ public class ScheduleControllerImpl implements ScheduleController {
   }
 
   private void updateSchedule(Schedule from, Schedule to) {
-    // TODO: What does it mean to update a completed schedule?
     if (from.getCron() != null) {
       validateCronExpression(from.getCron());
       to.setCron(from.getCron());

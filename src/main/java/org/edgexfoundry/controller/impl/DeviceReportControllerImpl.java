@@ -30,6 +30,7 @@ import org.edgexfoundry.domain.meta.ActionType;
 import org.edgexfoundry.domain.meta.Device;
 import org.edgexfoundry.domain.meta.DeviceReport;
 import org.edgexfoundry.domain.meta.ScheduleEvent;
+import org.edgexfoundry.exception.controller.ClientException;
 import org.edgexfoundry.exception.controller.DataValidationException;
 import org.edgexfoundry.exception.controller.LimitExceededException;
 import org.edgexfoundry.exception.controller.NotFoundException;
@@ -188,6 +189,8 @@ public class DeviceReportControllerImpl implements DeviceReportController {
   @RequestMapping(method = RequestMethod.POST)
   @Override
   public String add(@RequestBody DeviceReport deviceReport) {
+    if (deviceReport == null)
+      throw new ServiceException(new DataValidationException("No device report data provided"));
     try {
       // TODO - someday check value descriptors exist
       validateDevice(deviceReport.getDevice());
@@ -219,6 +222,8 @@ public class DeviceReportControllerImpl implements DeviceReportController {
   @RequestMapping(method = RequestMethod.PUT)
   @Override
   public boolean update(@RequestBody DeviceReport deviceReport2) {
+    if (deviceReport2 == null)
+      throw new ServiceException(new DataValidationException("No device report data provided"));
     try {
       DeviceReport deviceReport = dao.getByIdOrName(deviceReport2);
       if (deviceReport == null) {
@@ -232,6 +237,8 @@ public class DeviceReportControllerImpl implements DeviceReportController {
       throw nE;
     } catch (DataValidationException dE) {
       throw dE;
+    } catch (ClientException cE) {
+      throw cE;
     } catch (Exception e) {
       logger.error("Error updating DeviceReport:  " + e.getMessage());
       throw new ServiceException(e);

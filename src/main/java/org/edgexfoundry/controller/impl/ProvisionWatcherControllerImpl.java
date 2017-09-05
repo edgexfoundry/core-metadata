@@ -291,8 +291,6 @@ public class ProvisionWatcherControllerImpl implements ProvisionWatcherControlle
       return watcher.getId();
     } catch (DuplicateKeyException dE) {
       throw new DataValidationException("Name is not unique: " + watcher.getName());
-    } catch (NotFoundException nE) {
-      throw nE;
     } catch (DataValidationException dE) {
       throw dE;
     } catch (Exception e) {
@@ -325,9 +323,8 @@ public class ProvisionWatcherControllerImpl implements ProvisionWatcherControlle
   @RequestMapping(method = RequestMethod.PUT)
   @Override
   public boolean update(@RequestBody ProvisionWatcher watcher2) {
-    if (watcher2 == null) {
-      throw new DataValidationException("Cannot update provision watcher from null");
-    }
+    if (watcher2 == null)
+      throw new ServiceException(new DataValidationException("No provision watcher data provided"));
     try {
       ProvisionWatcher watcher = getByIdOrName(watcher2);
       if (watcher == null) {
@@ -420,8 +417,6 @@ public class ProvisionWatcherControllerImpl implements ProvisionWatcherControlle
   }
 
   private ProvisionWatcher getByIdOrName(ProvisionWatcher watcher) {
-    if (watcher == null)
-      return null;
     if (watcher.getId() != null)
       return repos.findOne(watcher.getId());
     return repos.findByName(watcher.getName());

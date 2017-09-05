@@ -297,6 +297,8 @@ public class ScheduleEventControllerImpl implements ScheduleEventController {
   @RequestMapping(method = RequestMethod.PUT)
   @Override
   public boolean update(@RequestBody ScheduleEvent scheduleEvent2) {
+    if (scheduleEvent2 == null)
+      throw new ServiceException(new DataValidationException("No schedule event data provided"));
     try {
       ScheduleEvent scheduleEvent = dao.getByIdOrName(scheduleEvent2);
       if (scheduleEvent == null) {
@@ -329,22 +331,8 @@ public class ScheduleEventControllerImpl implements ScheduleEventController {
         logger.error("Service with name: " + from.getService() + ERR_NOT_FND);
         throw new NotFoundException("Schedule", from.getService());
       }
-    if (from.getSchedule() != null)
-      if (isScheduleNameValid(from.getSchedule()))
-        to.setSchedule(from.getSchedule());
-      else {
-        logger.error("Schedule with name: " + from.getSchedule() + ERR_NOT_FND);
-        throw new NotFoundException(Schedule.class.toString(), from.getSchedule());
-      }
-    if (from.getName() != null) {
-      if (dao.isScheduleEventAssociatedToDeviceReport(to)) {
-        logger
-            .error("Data integrity issue. ScheduleEvent with name: " + from.getName() + ERR_REFBY);
-        throw new DataValidationException(
-            "Data integrity issue. ScheduleEvent with name: " + from.getName() + ERR_REFBY);
-      } else
-        to.setName(from.getName());
-    }
+    checkSchedule(from, to);
+    checkServiceName(from, to);
     if (from.getOrigin() != 0)
       to.setOrigin(from.getOrigin());
     repos.save(to);
@@ -356,6 +344,28 @@ public class ScheduleEventControllerImpl implements ScheduleEventController {
     } else {
       // update the to
       notifyAssociates(to, Action.PUT);
+    }
+  }
+  
+  private void checkSchedule(ScheduleEvent from, ScheduleEvent to) {
+    if (from.getSchedule() != null)
+      if (isScheduleNameValid(from.getSchedule()))
+        to.setSchedule(from.getSchedule());
+      else {
+        logger.error("Schedule with name: " + from.getSchedule() + ERR_NOT_FND);
+        throw new NotFoundException(Schedule.class.toString(), from.getSchedule());
+      }
+  }
+  
+  private void checkServiceName(ScheduleEvent from, ScheduleEvent to) {
+    if (from.getName() != null) {
+      if (dao.isScheduleEventAssociatedToDeviceReport(to)) {
+        logger
+            .error("Data integrity issue. ScheduleEvent with name: " + from.getName() + ERR_REFBY);
+        throw new DataValidationException(
+            "Data integrity issue. ScheduleEvent with name: " + from.getName() + ERR_REFBY);
+      } else
+        to.setName(from.getName());
     }
   }
 

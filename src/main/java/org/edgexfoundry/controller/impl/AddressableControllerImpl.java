@@ -61,7 +61,8 @@ public class AddressableControllerImpl implements AddressableController {
 
   @Autowired
   private CallbackExecutor callback;
-  @Value("${read.max.limit}")
+  
+  @Value("${read.max.limit:100}")
   private int maxLimit;
 
   /**
@@ -246,6 +247,8 @@ public class AddressableControllerImpl implements AddressableController {
   @RequestMapping(method = RequestMethod.PUT)
   @Override
   public boolean update(@RequestBody Addressable addressable2) {
+    if (addressable2 == null)
+      throw new ServiceException(new DataValidationException("No addressable data provided"));
     try {
       Addressable addressable = dao.getByIdOrName(addressable2);
       if (addressable == null) {
@@ -286,17 +289,21 @@ public class AddressableControllerImpl implements AddressableController {
     if (from.getPassword() != null)
       to.setPassword(from.getPassword());
     if (from.getName() != null && !from.getName().equals(to.getName())) {
-      if ((dao.isAddressableAssociatedToDevice(to)
-          || dao.isAddressableAssociatedToDeviceService(to))) {
-        logger.error("Data integrity issue. Addressable with name: " + from.getName() + ERR_MSG);
-        throw new DataValidationException(
-            "Data integrity issue. Addressable with name: " + from.getName() + ERR_MSG);
-      } else
-        to.setName(from.getName());
+      checkAddressableAssociatedToDevice(to, from.getName());
     }
     if (from.getOrigin() != 0)
       to.setOrigin(from.getOrigin());
     repos.save(to);
+  }
+  
+  private void checkAddressableAssociatedToDevice(Addressable addressable, String oldName) {
+    if ((dao.isAddressableAssociatedToDevice(addressable)
+        || dao.isAddressableAssociatedToDeviceService(addressable))) {
+      logger.error("Data integrity issue. Addressable with name: " + oldName + ERR_MSG);
+      throw new DataValidationException(
+          "Data integrity issue. Addressable with name: " + oldName + ERR_MSG);
+    } else
+      addressable.setName(oldName);
   }
 
   /**

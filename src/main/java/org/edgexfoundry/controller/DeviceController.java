@@ -308,8 +308,6 @@ public interface DeviceController {
    */
   boolean update(@RequestBody Device device2);
 
-  Device getDeviceByIdOrName(Device device);
-
   /**
    * Remove the Device designated by database generated id. This does not remove associated objects
    * (addressable, service, profile, etc.). Returns ServiceException (HTTP 503) for unknown or
