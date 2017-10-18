@@ -17,7 +17,6 @@ The Barcelona Release (v 0.2) of the Core Metadata micro service includes the fo
 * Provide option to include stack trace in log outputs
 
 ## Pull Request/Commit Details
-* None
  - [#15](https://github.com/edgexfoundry/core-metadata/pull/15) - Remove staging plugin contributed by Jeremy Phelps ([JPWKU](https://github.com/JPWKU))
  - [#14](https://github.com/edgexfoundry/core-metadata/pull/14) - Fixes Maven artifact dependency path contributed by Tyler Cox ([trcox](https://github.com/trcox))
  - [#13](https://github.com/edgexfoundry/core-metadata/pull/13) - added staging and snapshots repos to pom along with nexus staging mav… contributed by Jim White ([jpwhitemn](https://github.com/jpwhitemn))
@@ -34,4 +33,3 @@ The Barcelona Release (v 0.2) of the Core Metadata micro service includes the fo
  - [#2](https://github.com/edgexfoundry/core-metadata/pull/2) - Add distributionManagement for artifact storage contributed by Andrew Grimberg ([tykeal](https://github.com/tykeal))
  - [#1](https://github.com/edgexfoundry/core-metadata/pull/1) - Contributed Project Fuse source code contributed by Tyler Cox ([trcox](https://github.com/trcox))
 
-Commits: ...
