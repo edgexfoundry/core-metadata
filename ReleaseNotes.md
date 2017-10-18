@@ -1,7 +1,7 @@
-#v0.2 (10/20/2017)
-#Release Notes
+# v0.2 (10/20/2017)
+# Release Notes
 
-##Notable Changes
+## Notable Changes
 The Barcelona Release (v 0.2) of the Core Metadata micro service includes the following:
 * Application of Google Style Guidelines to the code base
 * Increase in unit/intergration tests from 630 tests to 965 tests
@@ -10,13 +10,13 @@ The Barcelona Release (v 0.2) of the Core Metadata micro service includes the fo
 * Added Dockerfile for creation of micro service targeted for ARM64 
 * Added interfaces for all Controller classes
 
-##Bug Fixes
+## Bug Fixes
 * Fix difference in API versus RAML document
 * GET Device Profile by id not returning 404
 * Removed OS specific file path for logging file 
 * Provide option to include stack trace in log outputs
 
-##Pull Request/Commit Details
+## Pull Request/Commit Details
 * None
  - [#15](https://github.com/edgexfoundry/core-metadata/pull/15) - Remove staging plugin contributed by Jeremy Phelps ([JPWKU](https://github.com/JPWKU))
  - [#14](https://github.com/edgexfoundry/core-metadata/pull/14) - Fixes Maven artifact dependency path contributed by Tyler Cox ([trcox](https://github.com/trcox))
