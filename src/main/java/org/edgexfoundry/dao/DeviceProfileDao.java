@@ -71,10 +71,23 @@ public class DeviceProfileDao {
     if (commands == null || commands.isEmpty())
       return;
     Set<String> uniqueCommandNames =
-        commands.stream().map(Command::getName).collect(Collectors.toSet());
+        commands.stream().map(Command::getName).distinct().collect(Collectors.toSet());
     if (uniqueCommandNames.size() < commands.size())
       throw new DataValidationException("Command names must be unique per DeviceProfile");
   }
+
+  public void checkCommandNames(List<Command> commands, String newCmdName) {
+    // No two commands for a given profile can have the same name. Command
+    // names are not unique across all of EdgeX, but command names per
+    // profile must be unique. This method checks the names and throws a
+    // DataValidationError if they are determined not to be unique. Should
+    // be called from any add or update method.
+    if (commands == null || commands.isEmpty() || newCmdName == null || newCmdName.isEmpty())
+      return;
+    if (commands.stream().map(Command::getName).anyMatch(newCmdName::equals))
+      throw new DataValidationException("Command names must be unique per DeviceProfile");
+  }
+
 
   public List<DeviceProfile> getAssociatedProfilesForCommand(Command command) {
     if (command == null) {

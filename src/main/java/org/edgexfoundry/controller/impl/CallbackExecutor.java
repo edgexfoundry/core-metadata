@@ -54,6 +54,7 @@ public class CallbackExecutor {
 
   @Async
   public void callback(Asset asset, final String id, final Action action, final ActionType type) {
+    if (asset == null) return;
     final String url = getCallBackURL(asset.getAddressable());
     try {
       if (url != null) {

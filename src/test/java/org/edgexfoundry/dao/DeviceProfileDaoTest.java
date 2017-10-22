@@ -79,6 +79,34 @@ public class DeviceProfileDaoTest {
   }
 
   @Test
+  public void testCheckCommandNamesWithNewValue() {
+    List<Command> commands = new ArrayList<>();
+    Command command = CommandData.newTestInstance();
+    Command command2 = new Command();
+    Command command3 = new Command();
+    command2.setName("c2");
+    command3.setName("c3");
+    commands.add(command);
+    commands.add(command2);
+    commands.add(command3);
+    dao.checkCommandNames(commands, "c4");
+  }
+
+  @Test(expected = DataValidationException.class)
+  public void testCheckCommandNamesWithNewValueNonUnique() {
+    List<Command> commands = new ArrayList<>();
+    Command command = CommandData.newTestInstance();
+    Command command2 = new Command();
+    Command command3 = new Command();
+    command2.setName("c2");
+    command3.setName("c3");
+    commands.add(command);
+    commands.add(command2);
+    commands.add(command3);
+    dao.checkCommandNames(commands, "c3");
+  }
+
+  @Test
   public void testCheckCommandNames() {
     List<Command> commands = new ArrayList<>();
     Command command = CommandData.newTestInstance();

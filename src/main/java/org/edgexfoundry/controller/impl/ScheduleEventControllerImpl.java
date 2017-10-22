@@ -250,10 +250,9 @@ public class ScheduleEventControllerImpl implements ScheduleEventController {
   @Override
   public String add(@RequestBody ScheduleEvent scheduleEvent) {
     if (scheduleEvent == null)
-      throw new ServiceException(new DataValidationException("No schedule event data provided"));
+      throw new DataValidationException("No schedule event data provided");
     if (scheduleEvent.getSchedule() == null)
-      throw new ServiceException(
-          new DataValidationException("No schedule provided for schedule event"));
+      throw new DataValidationException("No schedule provided for schedule event");
     try {
       if (isScheduleNameValid(scheduleEvent.getSchedule())) {
         attachAssociated(scheduleEvent);
@@ -346,7 +345,7 @@ public class ScheduleEventControllerImpl implements ScheduleEventController {
       notifyAssociates(to, Action.PUT);
     }
   }
-  
+
   private void checkSchedule(ScheduleEvent from, ScheduleEvent to) {
     if (from.getSchedule() != null)
       if (isScheduleNameValid(from.getSchedule()))
@@ -356,7 +355,7 @@ public class ScheduleEventControllerImpl implements ScheduleEventController {
         throw new NotFoundException(Schedule.class.toString(), from.getSchedule());
       }
   }
-  
+
   private void checkServiceName(ScheduleEvent from, ScheduleEvent to) {
     if (from.getName() != null) {
       if (dao.isScheduleEventAssociatedToDeviceReport(to)) {

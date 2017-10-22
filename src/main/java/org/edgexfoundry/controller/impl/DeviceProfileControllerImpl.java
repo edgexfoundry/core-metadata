@@ -343,6 +343,8 @@ public class DeviceProfileControllerImpl implements DeviceProfileController {
       }
     } catch (ClientException cE) {
       throw cE;
+    } catch (DataValidationException dE) {
+      throw dE;
     } catch (Exception e) {
       logger.error("Error uploading device profile from YAML:  " + e.getMessage());
       throw new ServiceException(e);
@@ -368,6 +370,8 @@ public class DeviceProfileControllerImpl implements DeviceProfileController {
       saveAssociatedCommands(deviceProfile);
       repos.save(deviceProfile);
       return deviceProfile.getId();
+    } catch (DataValidationException dE) {
+      throw dE;
     } catch (Exception e) {
       logger.error("Error uploading device profile from YAML:  " + e.getMessage());
       throw new ServiceException(e);
