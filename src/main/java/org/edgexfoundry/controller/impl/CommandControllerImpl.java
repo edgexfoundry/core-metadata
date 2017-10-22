@@ -182,7 +182,7 @@ public class CommandControllerImpl implements CommandController {
       to.setGet(from.getGet());
     if (from.getPut() != null)
       to.setPut(from.getPut());
-    if (from.getName() != null) {
+    if (from.getName() != null && !from.getName().equals(to.getName())) {
       checkAssociatedProfilesForDupeNames(from);
       to.setName(from.getName());
     }
@@ -196,7 +196,7 @@ public class CommandControllerImpl implements CommandController {
     // for that profile. Command names are not globally unique but must be
     // unique per DeviceProfile.
     List<DeviceProfile> profiles = profileDao.getAssociatedProfilesForCommand(command);
-    profiles.forEach(p -> profileDao.checkCommandNames(p.getCommands()));
+    profiles.forEach(p -> profileDao.checkCommandNames(p.getCommands(), command.getName()));
   }
 
   /**

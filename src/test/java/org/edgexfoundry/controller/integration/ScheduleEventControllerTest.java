@@ -177,7 +177,7 @@ public class ScheduleEventControllerTest {
     controller.add(event);
   }
 
-  @Test(expected = ServiceException.class)
+  @Test(expected = DataValidationException.class)
   public void testAddWithNoScheduleName() {
     ScheduleEvent event = newTestInstance();
     event.setName("NewName");
@@ -185,7 +185,7 @@ public class ScheduleEventControllerTest {
     controller.add(event);
   }
 
-  @Test(expected = ServiceException.class)
+  @Test(expected = DataValidationException.class)
   public void testAddNull() {
     controller.add(null);
   }
