@@ -629,7 +629,7 @@ public class DeviceControllerImpl implements DeviceController {
    * if the proposed new state is null;
    * 
    * @param id - database generated identifier for the device
-   * @param opState - new op state for the device (either enabled or disabled)
+   * @param opState - new op state for the device (either ENABLED or DISABLED)
    * @return - boolean indicating success of the operation
    */
   @RequestMapping(value = "/{id}/opstate/{opState}", method = RequestMethod.PUT)
@@ -673,7 +673,7 @@ public class DeviceControllerImpl implements DeviceController {
    * proposed new state is null;
    * 
    * @param name - device name
-   * @param opState - new op state for the device (either enabled or disabled)
+   * @param opState - new op state for the device (either ENABLED or DISABLED)
    * @return - boolean indicating success of the operation
    */
   @RequestMapping(value = "/name/{name:.+}/opstate/{opState}", method = RequestMethod.PUT)
@@ -703,7 +703,7 @@ public class DeviceControllerImpl implements DeviceController {
    * if the proposed new state is null;
    * 
    * @param id - database generated identifier for the device
-   * @param adminstate - new admin state for the device (either locked or unlocked)
+   * @param adminstate - new admin state for the device (either LOCKED or UNLOCKED)
    * @return - boolean indicating success of the operation
    */
   @RequestMapping(value = "/{id}/adminstate/{adminState}", method = RequestMethod.PUT)
@@ -748,7 +748,7 @@ public class DeviceControllerImpl implements DeviceController {
    * new state is null;
    * 
    * @param name - device name
-   * @param opState - new admin state for the device (either locked or unlocked)
+   * @param opState - new admin state for the device (either LOCKED or UNLOCKED)
    * @return - boolean indicating success of the operation
    */
   @RequestMapping(value = "/name/{name:.+}/adminstate/{adminState}", method = RequestMethod.PUT)

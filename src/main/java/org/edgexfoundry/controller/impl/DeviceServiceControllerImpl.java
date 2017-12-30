@@ -463,7 +463,7 @@ public class DeviceServiceControllerImpl implements DeviceServiceController {
    * (HTTP 404) if the device service cannot be found by the identifier provided.
    * 
    * @param id - database generated identifier for the device service
-   * @param opState - new op state for the device service (either enabled or disabled)
+   * @param opState - new op state for the device service (either ENABLED or DISABLED)
    * @return - boolean indicating success of the operation
    */
   @RequestMapping(value = "/{id}/opstate/{opState}", method = RequestMethod.PUT)
@@ -501,7 +501,7 @@ public class DeviceServiceControllerImpl implements DeviceServiceController {
    * (HTTP 404) if the device service cannot be found by the name provided.
    * 
    * @param name - device service name
-   * @param opState - new op state for the device service (either enabled or disabled)
+   * @param opState - new op state for the device service (either ENABLED or DISABLED)
    * @return - boolean indicating success of the operation
    */
   @RequestMapping(value = "/name/{name:.+}/opstate/{opState}", method = RequestMethod.PUT)
@@ -528,7 +528,7 @@ public class DeviceServiceControllerImpl implements DeviceServiceController {
    * (HTTP 404) if the device service cannot be found by the identifier provided.
    * 
    * @param id - database generated identifier for the device service
-   * @param adminstate - new admin state for the device service (either locked or unlocked)
+   * @param adminstate - new admin state for the device service (either LOCKED or UNLOCKED)
    * @return - boolean indicating success of the operation
    */
   @RequestMapping(value = "/{id}/adminstate/{adminState}", method = RequestMethod.PUT)
@@ -567,7 +567,7 @@ public class DeviceServiceControllerImpl implements DeviceServiceController {
    * device service cannot be found by the identifier provided.
    * 
    * @param name - device service name
-   * @param opState - new admin state for the device service (either locked or unlocked)
+   * @param opState - new admin state for the device service (either LOCKED or UNLOCKED)
    * @return - boolean indicating success of the operation
    */
   @RequestMapping(value = "/name/{name:.+}/adminstate/{adminState}", method = RequestMethod.PUT)

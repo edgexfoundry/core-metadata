@@ -254,7 +254,7 @@ public interface DeviceController {
    * if the proposed new state is null;
    * 
    * @param id - database generated identifier for the device
-   * @param opState - new op state for the device (either enabled or disabled)
+   * @param opState - new op state for the device (either ENABLED or DISABLED)
    * @return - boolean indicating success of the operation
    */
   boolean updateOpState(@PathVariable String id, @PathVariable String opState);
@@ -266,7 +266,7 @@ public interface DeviceController {
    * proposed new state is null;
    * 
    * @param name - device name
-   * @param opState - new op state for the device (either enabled or disabled)
+   * @param opState - new op state for the device (either ENABLED or DISABLED)
    * @return - boolean indicating success of the operation
    */
   boolean updateOpStateByName(@PathVariable String name, @PathVariable String opState);
@@ -278,7 +278,7 @@ public interface DeviceController {
    * if the proposed new state is null;
    * 
    * @param id - database generated identifier for the device
-   * @param adminstate - new admin state for the device (either locked or unlocked)
+   * @param adminstate - new admin state for the device (either LOCKED or UNLOCKED)
    * @return - boolean indicating success of the operation
    */
   boolean updateAdminState(@PathVariable String id, @PathVariable String adminState);
@@ -290,7 +290,7 @@ public interface DeviceController {
    * new state is null;
    * 
    * @param name - device name
-   * @param opState - new admin state for the device (either locked or unlocked)
+   * @param opState - new admin state for the device (either LOCKED or UNLOCKED)
    * @return - boolean indicating success of the operation
    */
   boolean updateAdminStateByName(@PathVariable String name, @PathVariable String adminState);
